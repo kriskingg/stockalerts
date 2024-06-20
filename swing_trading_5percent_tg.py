@@ -5,7 +5,6 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import schedule
 import logging
 from time import sleep
 
@@ -91,20 +90,5 @@ def GetDataFromChartink():
     logging.error("All retries failed")
     send_telegram_message("All retries failed")
 
-def run_scheduled_job():
-    """Convert to IST and run job if it's 23:40 IST."""
-    now_utc = datetime.datetime.utcnow()
-    ist = now_utc + datetime.timedelta(hours=5, minutes=30)  # UTC+5:30
-    if ist.strftime('%H:%M') == '23:40':
-        logging.info("Running scheduled job.")
-        GetDataFromChartink()
-
-# Scheduling
-schedule.every(1).minutes.do(run_scheduled_job)
-
-# Main execution for testing
 if __name__ == '__main__':
     GetDataFromChartink()  # Immediate execution for testing
-    while True:
-        schedule.run_pending()
-        time.sleep(1)  # Check every second for closer interval handling
