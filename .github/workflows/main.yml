@@ -2,7 +2,7 @@ name: Run Chartink Script
 
 on:
   schedule:
-    - cron: '10 19 * * *'  # Runs at 19:10 UTC daily, which is 00:40 IST the next day
+    - cron: '30 5 * * *'  # Runs at 5:30 UTC daily, which is 11:00 IST the next day
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
