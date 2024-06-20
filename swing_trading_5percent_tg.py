@@ -15,14 +15,23 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 # Constants for Chartink
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
-Condition = os.getenv('CHARTINK_CONDITION', 'Default Condition if not set')
-logging.debug("CHARTINK_CONDITION: {}".format(Condition))
+Condition = os.getenv('CHARTINK_CONDITION')
+if Condition:
+    logging.debug("CHARTINK_CONDITION is set.")
+else:
+    logging.error("CHARTINK_CONDITION is not set.")
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-logging.debug("TELEGRAM_TOKEN: {}".format(TELEGRAM_TOKEN))
-logging.debug("TELEGRAM_CHAT_ID: {}".format(TELEGRAM_CHAT_ID))
+if TELEGRAM_TOKEN:
+    logging.debug("TELEGRAM_TOKEN is set.")
+else:
+    logging.error("TELEGRAM_TOKEN is not set.")
+if TELEGRAM_CHAT_ID:
+    logging.debug("TELEGRAM_CHAT_ID is set.")
+else:
+    logging.error("TELEGRAM_CHAT_ID is not set.")
 
 def send_telegram_message(message):
     """Send a message to a predefined Telegram chat via bot using HTML formatting."""
