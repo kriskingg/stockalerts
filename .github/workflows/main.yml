@@ -1,0 +1,28 @@
+name: Run Chartink Script
+
+on:
+  schedule:
+    - cron: '5 18 * * *'  # Runs at 18:05 UTC daily, which is 23:35 IST
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 pandas schedule
+
+      - name: Run the script
+        run: python swing_trading_5percent_tg.py  # Ensure the script filename is correct
+        env:
+          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
