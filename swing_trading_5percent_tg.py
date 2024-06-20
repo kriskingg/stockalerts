@@ -16,10 +16,13 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
 Condition = os.getenv('CHARTINK_CONDITION', 'Default Condition if not set')
+logging.debug("CHARTINK_CONDITION: {}".format(Condition))
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
+logging.debug("TELEGRAM_TOKEN: {}".format(TELEGRAM_TOKEN))
+logging.debug("TELEGRAM_CHAT_ID: {}".format(TELEGRAM_CHAT_ID))
 
 def send_telegram_message(message):
     """Send a message to a predefined Telegram chat via bot using HTML formatting."""
@@ -43,10 +46,13 @@ def GetDataFromChartink():
         try:
             with requests.Session() as s:
                 s.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                logging.debug("Headers: {}".format(s.headers))
                 r = s.get(Charting_Link)
+                logging.debug("GET request to Charting_Link status code: {}".format(r.status_code))
                 soup = BeautifulSoup(r.text, "html.parser")
                 csrf_token = soup.select_one("[name='csrf-token']")['content']
                 s.headers.update({'x-csrf-token': csrf_token})
+                logging.debug("CSRF Token: {}".format(csrf_token))
                 response = s.post(Charting_url, data={'scan_clause': Condition})
                 response_json = response.json()
                 logging.debug("Request Data: {}".format({'scan_clause': Condition}))
