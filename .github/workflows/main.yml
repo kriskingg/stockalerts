@@ -2,7 +2,7 @@ name: Run Chartink Script
 
 on:
   schedule:
-    - cron: '51 18 * * *'  # Runs at 18:51 UTC daily, which is 00:21 IST the next day
+    - cron: '6 19 * * *'  # Runs at 19:06 UTC daily, which is 00:36 IST the next day
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
@@ -23,9 +23,9 @@ jobs:
 
       - name: Check environment variables
         run: |
-          echo "CHARTINK_CONDITION=$CHARTINK_CONDITION"
-          echo "TELEGRAM_TOKEN is set"
-          echo "TELEGRAM_CHAT_ID is set"
+          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
+          echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
+          echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
         env:
           CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
