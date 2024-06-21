@@ -24,14 +24,14 @@ jobs:
       - name: Check environment variables
         run: |
           echo "RSAEMA: $RSAEMA"
-          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
           echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
           echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
+          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
         env:
           RSAEMA: ${{ secrets.RSAEMA }}
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
 
       - name: Run 65and35 script
         run: python 65and35.py
