@@ -68,7 +68,7 @@ def GetDataFromChartink():
                     if 'data' in response_json and response_json['data']:
                         data = pd.DataFrame(response_json['data'])
                         formatted_message = format_data(data)
-                        title = "Momentum Strategy - Target 5%(Activate trailing stop loss once it reaches 4%) and SL 1%"
+                        title = "Momentum Strategy"
                         full_message = f"{title}\n{formatted_message}"
                         logging.info("Data received:\n{}".format(data))
                         send_telegram_message(f"Chartink Data:\n{full_message}")
