@@ -6,6 +6,40 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
+  existing-job:
+    runs-on: ubuntu-latest
+
+    if: github.event_name != 'schedule'  # Only run this job if the event is not schedule
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 pandas
+
+      - name: Check environment variables for existing job
+        run: |
+          echo "CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}"
+          echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
+          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
+        env:
+          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Run the existing script
+        run: python existing_script.py  # Replace with your existing script file name
+        env:
+          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
   run-script:
     runs-on: ubuntu-latest
 
@@ -19,21 +53,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests beautifulsoup4 pandas schedule
+          pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables
+      - name: Check environment variables for new script
         run: |
-          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
-          echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
-          echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
+          echo "RSAEMA: ${{ secrets.RSAEMA }}"
+          echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
+          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
         env:
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+          RSAEMA: ${{ secrets.RSAEMA }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-      - name: Run the script
+      - name: Run the new script
         run: python swing_trading_5percent_tg.py
         env:
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+          RSAEMA: ${{ secrets.RSAEMA }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
