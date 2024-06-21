@@ -71,6 +71,7 @@ def GetDataFromChartink():
                         title = "Momentum Strategy"
                         full_message = f"{title}\n{formatted_message}"
                         logging.info("Data received:\n{}".format(data))
+                        logging.debug("Full message to be sent: {}".format(full_message))
                         send_telegram_message(f"Chartink Data:\n{full_message}")
                         return
                     else:
