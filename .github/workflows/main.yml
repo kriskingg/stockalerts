@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  run-existing-script:
+  run-65and35-script:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
         run: |
           pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables for existing script
+      - name: Check environment variables for 65and35 script
         run: |
           echo "RSAEMA: ${{ secrets.RSAEMA }}"
           echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
@@ -31,14 +31,14 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-      - name: Run the existing script
+      - name: Run the 65and35 script
         run: python 65and35.py
         env:
           RSAEMA: ${{ secrets.RSAEMA }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-  run-new-script:
+  run-swing-trading-script:
     runs-on: ubuntu-latest
 
     steps:
@@ -53,7 +53,7 @@ jobs:
         run: |
           pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables for new script
+      - name: Check environment variables for swing trading script
         run: |
           echo "CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}"
           echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
@@ -63,7 +63,7 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-      - name: Run the new script
+      - name: Run the swing trading script
         run: python swing_trading_5percent_tg.py
         env:
           CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
