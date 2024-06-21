@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  run-65and35-script:
+  run-scripts:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,49 +21,25 @@ jobs:
         run: |
           pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables for 65and35 script
+      - name: Check environment variables
         run: |
-          echo "RSAEMA: ${{ secrets.RSAEMA }}"
-          echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
-          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
+          echo "RSAEMA: $RSAEMA"
+          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
+          echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
+          echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
         env:
           RSAEMA: ${{ secrets.RSAEMA }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-      - name: Run the 65and35 script
-        run: python 65and35.py
-        env:
-          RSAEMA: ${{ secrets.RSAEMA }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-  run-swing-trading-script:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-
-      - name: Install dependencies
-        run: |
-          pip install requests beautifulsoup4 pandas
-
-      - name: Check environment variables for swing trading script
-        run: |
-          echo "CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}"
-          echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
-          echo "TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}"
-        env:
           CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-      - name: Run the swing trading script
+      - name: Run 65and35 script
+        run: python 65and35.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Run swing_trading_5percent_tg script
         run: python swing_trading_5percent_tg.py
         env:
           CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
