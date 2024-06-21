@@ -61,6 +61,7 @@ def GetDataFromChartink():
                 csrf_token = soup.select_one("[name='csrf-token']")['content']
                 s.headers.update({'x-csrf-token': csrf_token})
                 logging.debug("CSRF Token: {}".format(csrf_token))
+                logging.debug("Scan Condition: {}".format(Condition))
                 response = s.post(Charting_url, data={'scan_clause': Condition})
                 logging.debug("POST request to Charting_url status code: {}".format(response.status_code))
                 response_json = response.json()
