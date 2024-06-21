@@ -14,11 +14,11 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 # Constants for Chartink
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
-Condition = os.getenv('CHARTINK_CONDITION')
+Condition = os.getenv('RSAEMA')
 if Condition:
-    logging.debug("CHARTINK_CONDITION is set: {}".format(Condition))
+    logging.debug("RSAEMA is set: {}".format(Condition))
 else:
-    logging.error("CHARTINK_CONDITION is not set.")
+    logging.error("RSAEMA is not set.")
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
