@@ -11,11 +11,8 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 # Constants for Chartink
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
-Condition = os.getenv('RSAEMA_CONDITION')
-if Condition:
-    logging.debug("RSAEMA_CONDITION is set: {}".format(Condition))
-else:
-    logging.error("RSAEMA_CONDITION is not set.")
+Condition1 = os.getenv('RSAEMA')
+logging.debug("Condition 1: {}".format(Condition1))
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
@@ -44,7 +41,7 @@ def format_data(data):
     """Format DataFrame data into a more readable HTML format."""
     return "<pre>" + data.to_string(index=False) + "</pre>"
 
-def GetDataFromChartink():
+def get_data_from_chartink(condition):
     """Fetch data from Chartink based on the provided payload conditions."""
     retries = 3
     for attempt in range(retries):
@@ -58,11 +55,11 @@ def GetDataFromChartink():
                 csrf_token = soup.select_one("[name='csrf-token']")['content']
                 s.headers.update({'x-csrf-token': csrf_token})
                 logging.debug("CSRF Token: {}".format(csrf_token))
-                logging.debug("Scan Condition: {}".format(Condition))
-                response = s.post(Charting_url, data={'scan_clause': Condition})
+                logging.debug("Scan Condition: {}".format(condition))
+                response = s.post(Charting_url, data={'scan_clause': condition})
                 logging.debug("POST request to Charting_url status code: {}".format(response.status_code))
+                logging.debug("Request Data: {}".format({'scan_clause': condition}))
                 response_json = response.json()
-                logging.debug("Request Data: {}".format({'scan_clause': Condition}))
                 logging.debug("Response JSON: {}".format(response_json))
                 if response.status_code == 200:
                     if 'data' in response_json and response_json['data']:
@@ -90,4 +87,4 @@ def GetDataFromChartink():
     send_telegram_message("All retries failed")
 
 if __name__ == '__main__':
-    GetDataFromChartink()  # Immediate execution for testing
+    get_data_from_chartink(Condition1)
