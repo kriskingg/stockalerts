@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 # Constants for Chartink
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
-Condition = "( {-1} ( latest rsi  ( 65 ) >= latest ema ( rsi(65),35 ) and 1 day ago rsi  ( 65 ) > 1 day ago ema ( rsi(65),35 ) and 2 day ago  rsi  ( 65 ) <= 2 day ago  ema ( rsi(65),35 ) ) )"
+Condition = "( {57960} ( latest rsi  ( 65 ) >= latest ema ( rsi(65),35 ) and 1 day ago rsi  ( 65 ) > 1 day ago ema ( rsi(65),35 ) and 2 day ago  rsi  ( 65 ) <= 2 day ago  ema ( rsi(65),35 ) ) )"
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
