@@ -1,4 +1,4 @@
-name: Run Chartink Script
+name: Run Chartink Scripts
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  existing-job:
+  run-existing-script:
     runs-on: ubuntu-latest
 
     if: github.event_name != 'schedule'  # Only run this job if the event is not schedule
@@ -23,7 +23,7 @@ jobs:
         run: |
           pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables for existing job
+      - name: Check environment variables for existing script
         run: |
           echo "CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}"
           echo "TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}"
@@ -34,13 +34,13 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Run the existing script
-        run: python existing_script.py  # Replace with your existing script file name
+        run: python 65and35.py
         env:
           CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
-  run-script:
+  run-new-script:
     runs-on: ubuntu-latest
 
     steps:
