@@ -1,7 +1,4 @@
 import os
-import sys
-import time
-import datetime
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -14,11 +11,11 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 # Constants for Chartink
 Charting_Link = "https://chartink.com/screener/"
 Charting_url = 'https://chartink.com/screener/process'
-Condition = os.getenv('RSAEMA')
+Condition = os.getenv('RSAEMA_CONDITION')
 if Condition:
-    logging.debug("RSAEMA is set: {}".format(Condition))
+    logging.debug("RSAEMA_CONDITION is set: {}".format(Condition))
 else:
-    logging.error("RSAEMA is not set.")
+    logging.error("RSAEMA_CONDITION is not set.")
 
 # Telegram credentials from environment variables
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
