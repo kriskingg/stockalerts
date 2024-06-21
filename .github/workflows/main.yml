@@ -23,11 +23,9 @@ jobs:
 
       - name: Check environment variables
         run: |
-          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
           echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
           echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
         env:
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
