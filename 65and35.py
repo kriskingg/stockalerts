@@ -62,6 +62,7 @@ def GetDataFromChartink():
                 s.headers.update({'x-csrf-token': csrf_token})
                 logging.debug("CSRF Token: {}".format(csrf_token))
                 response = s.post(Charting_url, data={'scan_clause': Condition})
+                logging.debug("POST request to Charting_url status code: {}".format(response.status_code))
                 response_json = response.json()
                 logging.debug("Request Data: {}".format({'scan_clause': Condition}))
                 logging.debug("Response JSON: {}".format(response_json))

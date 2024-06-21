@@ -9,8 +9,6 @@ jobs:
   run-existing-script:
     runs-on: ubuntu-latest
 
-    if: github.event_name != 'schedule'  # Only run this job if the event is not schedule
-
     steps:
       - uses: actions/checkout@v2
 
