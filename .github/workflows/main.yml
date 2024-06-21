@@ -2,47 +2,37 @@ name: Run Chartink Scripts
 
 on:
   schedule:
-    - cron: '30 5 * * *'  # Runs at 5:30 UTC daily, which is 11:00 IST the next day
-  workflow_dispatch:  # Allows manual triggering of the workflow
+    - cron: '0 8 * * *'  # Adjust this to your desired schedule
+  workflow_dispatch:
 
 jobs:
   run-scripts:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
 
-      - name: Install dependencies
-        run: |
-          pip install requests beautifulsoup4 pandas
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 pandas
 
-      - name: Check environment variables
-        run: |
-          echo "RSAEMA_CONDITION: $RSAEMA_CONDITION"
-          echo "TELEGRAM_TOKEN: $TELEGRAM_TOKEN"
-          echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
-          echo "CHARTINK_CONDITION: $CHARTINK_CONDITION"
-        env:
-          RSAEMA_CONDITION: ${{ secrets.RSAEMA }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+    - name: Run 65and35 script
+      env:
+        RSAEMA: ${{ secrets.RSAEMA }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python 65and35.py
 
-      - name: Run 65and35 script
-        run: python 65and35.py
-        env:
-          RSAEMA_CONDITION: ${{ secrets.RSAEMA }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-      - name: Run swing_trading_5percent_tg script
-        run: python swing_trading_5percent_tg.py
-        env:
-          CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    - name: Run swing_trading_5percent_tg script
+      env:
+        CHARTINK_CONDITION: ${{ secrets.CHARTINK_CONDITION }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python swing_trading_5percent_tg.py
